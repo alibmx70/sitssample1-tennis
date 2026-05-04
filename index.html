@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+    <title>Tennis Ultimate League • Full Admin + Register</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+            background: radial-gradient(circle at 10% 20%, #0A192F, #061220);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 16px;
+        }
+
+        .phone {
+            max-width: 460px;
+            width: 100%;
+            height: 800px;
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 56px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4), 0 0 0 8px rgba(255, 107, 53, 0.25);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            animation: floatIn 0.5s ease-out;
+        }
+
+        @keyframes floatIn {
+            from { opacity: 0; transform: translateY(40px) scale(0.96); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .premium-header {
+            background: linear-gradient(145deg, #0A192F, #0F2E42);
+            padding: 20px 18px 16px;
+            border-bottom-left-radius: 40px;
+            border-bottom-right-radius: 40px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .header-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .logo h1 {
+            font-size: 1.3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #FF6B35, #FFB347);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .user-card-header {
+            background: rgba(255, 107, 53, 0.2);
+            backdrop-filter: blur(12px);
+            padding: 5px 12px;
+            border-radius: 60px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .rating-badge {
+            background: #FF6B35;
+            color: #0A192F;
+            padding: 3px 10px;
+            border-radius: 40px;
+            font-weight: bold;
+            font-size: 0.65rem;
+        }
+
+        .logout-btn {
+            background: rgba(255, 107, 53, 0.2);
+            border: 1px solid #FF6B35;
+            color: #FFB347;
+            padding: 5px 12px;
+            border-radius: 40px;
+            font-size: 0.65rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .scroll-area {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 14px 80px;
+            scroll-behavior: smooth;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 28px;
+            padding: 16px;
+            margin-bottom: 16px;
+            box-shadow: 0 8px 28px rgba(0, 0, 0, 0.06);
+            border: 1px solid rgba(255, 107, 53, 0.25);
+            transition: transform 0.25s ease;
+            animation: fadeSlideUp 0.4s ease-out;
+        }
+
+        @keyframes fadeSlideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: #0A192F;
+            border-left: 5px solid #FF6B35;
+            padding-left: 12px;
+            margin-bottom: 14px;
+        }
+
+        .user-list-premium {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        .user-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #F8FAFF;
+            border-radius: 60px;
+            padding: 6px 10px;
+            border: 1px solid #E2E8F0;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #FF6B35, #FFB347);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1rem;
+            color: white;
+        }
+
+        .user-details h4 {
+            font-size: 0.85rem;
+            color: #0A192F;
+        }
+
+        .user-details p {
+            font-size: 0.65rem;
+            color: #FF6B35;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 6px;
+        }
+
+        .chat-btn, .challenge-btn {
+            padding: 6px 12px;
+            border-radius: 40px;
+            font-size: 0.65rem;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+        }
+
+        .chat-btn {
+            background: #0A192F;
+            color: white;
+        }
+
+        .challenge-btn {
+            background: linear-gradient(135deg, #FF6B35, #E85D2C);
+            color: white;
+        }
+
+        .chat-window {
+            background: #F8FAFF;
+            border-radius: 24px;
+            padding: 12px;
+            margin-top: 12px;
+        }
+
+        .chat-messages {
+            max-height: 250px;
+            overflow-y: auto;
+            margin-bottom: 10px;
+            padding: 6px;
+        }
+
+        .msg-bubble {
+            background: white;
+            padding: 8px 12px;
+            border-radius: 20px;
+            margin-bottom: 8px;
+            border-left: 4px solid #FF6B35;
+            font-size: 0.75rem;
+        }
+
+        .input-row {
+            display: flex;
+            gap: 8px;
+        }
+
+        .input-row input {
+            flex: 1;
+            padding: 10px;
+            border-radius: 60px;
+            border: 1px solid #E2E8F0;
+        }
+
+        .back-btn {
+            background: transparent;
+            border: 1px solid #FF6B35;
+            color: #FF6B35;
+            margin-bottom: 10px;
+            padding: 6px 14px;
+            border-radius: 40px;
+            cursor: pointer;
+            font-size: 0.7rem;
+        }
+
+        .challenge-request {
+            background: #FFF4E6;
+            border-left: 4px solid #FF6B35;
+            padding: 10px;
+            border-radius: 16px;
+            margin-bottom: 10px;
+            font-size: 0.75rem;
+        }
+
+        .elegant-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .elegant-table th, .elegant-table td {
+            padding: 8px 4px;
+            text-align: left;
+            border-bottom: 1px solid #EDF2F7;
+            font-size: 0.7rem;
+        }
+
+        .forfeit-btn {
+            background: #DC2626;
+            background: linear-gradient(135deg, #DC2626, #B91C1C);
+            padding: 5px 10px;
+            border-radius: 40px;
+            font-size: 0.65rem;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .bottom-nav-premium {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            display: flex;
+            justify-content: space-around;
+            padding: 6px 12px 20px;
+            border-top: 1px solid rgba(255, 107, 53, 0.4);
+        }
+
+        .nav-icon-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+            font-size: 0.65rem;
+            font-weight: 600;
+            color: #64748B;
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 60px;
+            transition: all 0.2s;
+        }
+
+        .nav-icon-btn.active {
+            color: #FF6B35;
+            background: #FFF1E6;
+            transform: translateY(-2px);
+        }
+
+        /* Login & Register */
+        .login-container, .register-container {
+            background: linear-gradient(145deg, #FFFFFF, #FFF9F5);
+            border-radius: 56px;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 24px 20px;
+            overflow-y: auto;
+        }
+
+        .tennis-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #FF6B35, #FFB347);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            box-shadow: 0 10px 25px rgba(255, 107, 53, 0.3);
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .tennis-icon span { font-size: 2.5rem; }
+
+        .login-header h1 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #FF6B35, #E85D2C);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-align: center;
+        }
+
+        .login-header p {
+            color: #FF8C5A;
+            font-weight: 500;
+            font-size: 0.8rem;
+            text-align: center;
+        }
+
+        .input-group-login {
+            margin-bottom: 14px;
+        }
+
+        .input-group-login input, .input-group-login select {
+            width: 100%;
+            padding: 12px 16px;
+            background: #F8FAFF;
+            border: 2px solid #FFE4D6;
+            border-radius: 60px;
+            font-size: 0.85rem;
+        }
+
+        .input-group-login input:focus, .input-group-login select:focus {
+            outline: none;
+            border-color: #FF6B35;
+        }
+
+        .login-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #FF6B35, #E85D2C);
+            padding: 12px;
+            border-radius: 60px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-top: 8px;
+        }
+
+        .toggle-auth {
+            text-align: center;
+            margin-top: 16px;
+            font-size: 0.75rem;
+            color: #FF6B35;
+            cursor: pointer;
+        }
+
+        .demo-accounts {
+            background: #FFF9F5;
+            border-radius: 28px;
+            padding: 12px;
+            margin-top: 16px;
+        }
+
+        .demo-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            justify-content: center;
+            margin-top: 8px;
+        }
+
+        .demo-item {
+            background: white;
+            padding: 6px 10px;
+            border-radius: 40px;
+            font-size: 0.6rem;
+            color: #0A192F;
+            border: 1px solid #FFE4D6;
+            cursor: pointer;
+        }
+
+        .trophy-icon {
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+<div class="phone" id="appRoot"></div>
+
+<script>
+    // ========== STORAGE KEYS ==========
+    const STORAGE_USERS = "tennis_users_full";
+    const STORAGE_PLAYERS = "tennis_players_full";
+    const STORAGE_MATCHES = "tennis_matches_full";
+    const STORAGE_LEAGUES = "tennis_leagues_full";
+    const STORAGE_TOURNAMENTS = "tennis_tournaments_full";
+    const STORAGE_GROUP_CHAT = "tennis_group_chat_full";
+    const STORAGE_PRIVATE_CHAT = "tennis_private_chat_full";
+    const STORAGE_CHALLENGES = "tennis_challenges_full";
+    const STORAGE_SESSION = "tennis_session_full";
+
+    // ========== INIT DATA ==========
+    function initData() {
+        if (!localStorage.getItem(STORAGE_USERS)) {
+            const users = [
+                { email: "manager@tennis.com", password: "admin123", role: "manager", name: "Alex Coach", firstName: "Alex", lastName: "Coach", phone: "+123456789", location: "New York", skillLevel: "Pro", rating: 0, avatar: "AC" },
+                { email: "user@tennis.com", password: "user123", role: "user", name: "Emma Raducanu", firstName: "Emma", lastName: "Raducanu", phone: "+123456780", location: "London", skillLevel: "Intermediate", rating: 4.6, avatar: "ER" },
+                { email: "novak@tennis.com", password: "novak123", role: "user", name: "Novak Djokovic", firstName: "Novak", lastName: "Djokovic", phone: "+381123456", location: "Belgrade", skillLevel: "Pro", rating: 9.5, avatar: "ND" },
+                { email: "carlos@tennis.com", password: "carlos123", role: "user", name: "Carlos Alcaraz", firstName: "Carlos", lastName: "Alcaraz", phone: "+34123456", location: "Murcia", skillLevel: "Pro", rating: 9.3, avatar: "CA" }
+            ];
+            localStorage.setItem(STORAGE_USERS, JSON.stringify(users));
+        }
+        if (!localStorage.getItem(STORAGE_PLAYERS)) {
+            const players = [
+                { id: "p1", name: "Novak Djokovic", rating: 9.5, wins: 12, losses: 3, skillLevel: "Pro", last5: [{ vs: "Carlos Alcaraz", result: "Win 2-1", date: "2026-05-01" }, { vs: "Daniil Medvedev", result: "Win 2-0", date: "2026-04-28" }, { vs: "Jannik Sinner", result: "Loss 1-2", date: "2026-04-24" }, { vs: "Alexander Zverev", result: "Win 2-0", date: "2026-04-20" }, { vs: "Stefanos Tsitsipas", result: "Win 2-1", date: "2026-04-17" }] },
+                { id: "p2", name: "Carlos Alcaraz", rating: 9.3, wins: 10, losses: 4, skillLevel: "Pro", last5: [{ vs: "Novak Djokovic", result: "Loss 1-2", date: "2026-05-01" }, { vs: "Jannik Sinner", result: "Win 2-0", date: "2026-04-27" }, { vs: "Daniil Medvedev", result: "Win 2-1", date: "2026-04-23" }, { vs: "Holger Rune", result: "Win 2-0", date: "2026-04-19" }, { vs: "Andrey Rublev", result: "Win 2-1", date: "2026-04-16" }] },
+                { id: "p3", name: "Emma Raducanu", rating: 4.6, wins: 5, losses: 7, skillLevel: "Intermediate", last5: [{ vs: "Elena Rybakina", result: "Loss 0-2", date: "2026-05-01" }, { vs: "Leylah Fernandez", result: "Win 2-1", date: "2026-04-28" }, { vs: "Belinda Bencic", result: "Loss 1-2", date: "2026-04-24" }, { vs: "Karolina Muchova", result: "Win 2-1", date: "2026-04-20" }, { vs: "Maria Sakkari", result: "Loss 0-2", date: "2026-04-17" }] },
+                { id: "p4", name: "Iga Swiatek", rating: 9.4, wins: 14, losses: 2, skillLevel: "Pro", last5: [{ vs: "Aryna Sabalenka", result: "Win 2-0", date: "2026-05-02" }, { vs: "Elena Rybakina", result: "Win 2-1", date: "2026-04-29" }, { vs: "Coco Gauff", result: "Win 2-0", date: "2026-04-25" }, { vs: "Jessica Pegula", result: "Win 2-0", date: "2026-04-22" }, { vs: "Ons Jabeur", result: "Loss 0-2", date: "2026-04-18" }] }
+            ];
+            localStorage.setItem(STORAGE_PLAYERS, JSON.stringify(players));
+        }
+        if (!localStorage.getItem(STORAGE_MATCHES)) {
+            const matches = [
+                { id: "m1", home: "Novak Djokovic", away: "Carlos Alcaraz", date: "2026-05-25", time: "18:00", court: "Center Court", status: "upcoming", winner: null, loser: null, resultText: null },
+                { id: "m2", home: "Iga Swiatek", away: "Emma Raducanu", date: "2026-05-27", time: "16:30", court: "Court 1", status: "upcoming", winner: null, loser: null, resultText: null }
+            ];
+            localStorage.setItem(STORAGE_MATCHES, JSON.stringify(matches));
+        }
+        if (!localStorage.getItem(STORAGE_LEAGUES)) {
+            localStorage.setItem(STORAGE_LEAGUES, JSON.stringify([{ id: "lg1", name: "🏆 ULTIMATE ORANGE LEAGUE", season: "Summer 2026" }]));
+        }
+        if (!localStorage.getItem(STORAGE_TOURNAMENTS)) {
+            localStorage.setItem(STORAGE_TOURNAMENTS, JSON.stringify([
+                { id: "t1", name: "Wimbledon Open", trophy: "🏆 Golden Racket", date: "2026-06-15", status: "upcoming" }
+            ]));
+        }
+        if (!localStorage.getItem(STORAGE_GROUP_CHAT)) {
+            localStorage.setItem(STORAGE_GROUP_CHAT, JSON.stringify([
+                { id: "gc1", user: "Alex Coach", msg: "Welcome to Ultimate League! 🔥", timestamp: Date.now() }
+            ]));
+        }
+        if (!localStorage.getItem(STORAGE_PRIVATE_CHAT)) {
+            localStorage.setItem(STORAGE_PRIVATE_CHAT, JSON.stringify([]));
+        }
+        if (!localStorage.getItem(STORAGE_CHALLENGES)) {
+            localStorage.setItem(STORAGE_CHALLENGES, JSON.stringify([]));
+        }
+    }
+
+    function getUsers() { return JSON.parse(localStorage.getItem(STORAGE_USERS)); }
+    function getPlayers() { return JSON.parse(localStorage.getItem(STORAGE_PLAYERS)); }
+    function getMatches() { return JSON.parse(localStorage.getItem(STORAGE_MATCHES)); }
+    function getLeagues() { return JSON.parse(localStorage.getItem(STORAGE_LEAGUES)); }
+    function getTournaments() { return JSON.parse(localStorage.getItem(STORAGE_TOURNAMENTS)); }
+    function getGroupChat() { return JSON.parse(localStorage.getItem(STORAGE_GROUP_CHAT)); }
+    function getPrivateChat() { return JSON.parse(localStorage.getItem(STORAGE_PRIVATE_CHAT)); }
+    function getChallenges() { return JSON.parse(localStorage.getItem(STORAGE_CHALLENGES)); }
+    function saveUsers(u) { localStorage.setItem(STORAGE_USERS, JSON.stringify(u)); }
+    function saveMatches(m) { localStorage.setItem(STORAGE_MATCHES, JSON.stringify(m)); }
+    function savePlayers(p) { localStorage.setItem(STORAGE_PLAYERS, JSON.stringify(p)); }
+    function saveTournaments(t) { localStorage.setItem(STORAGE_TOURNAMENTS, JSON.stringify(t)); }
+    function saveGroupChat(c) { localStorage.setItem(STORAGE_GROUP_CHAT, JSON.stringify(c)); }
+    function savePrivateChat(c) { localStorage.setItem(STORAGE_PRIVATE_CHAT, JSON.stringify(c)); }
+    function saveChallenges(c) { localStorage.setItem(STORAGE_CHALLENGES, JSON.stringify(c)); }
+    function getSession() { const s = localStorage.getItem(STORAGE_SESSION); return s ? JSON.parse(s) : null; }
+    function setSession(u) { localStorage.setItem(STORAGE_SESSION, JSON.stringify(u)); }
+    function clearSession() { localStorage.removeItem(STORAGE_SESSION); }
+
+    function login(email, pass) {
+        const users = getUsers();
+        const found = users.find(u => u.email === email && u.password === pass);
+        if (found) { 
+            setSession({ 
+                email: found.email, role: found.role, name: found.name, 
+                rating: found.rating, avatar: found.avatar, skillLevel: found.skillLevel,
+                firstName: found.firstName, lastName: found.lastName, location: found.location
+            }); 
+            return true; 
+        }
+        return false;
+    }
+
+    function register(firstName, lastName, email, password, phone, location, skillLevel) {
+        const users = getUsers();
+        if (users.find(u => u.email === email)) return false;
+        const fullName = firstName + " " + lastName;
+        const avatar = (firstName.charAt(0) + lastName.charAt(0)).toUpperCase();
+        let rating = 3.0;
+        if (skillLevel === "Beginner") rating = 2.5;
+        else if (skillLevel === "Intermediate") rating = 4.5;
+        else if (skillLevel === "Advanced") rating = 6.5;
+        else if (skillLevel === "Pro") rating = 8.5;
+        
+        users.push({ email, password, role: "user", name: fullName, firstName, lastName, phone, location, skillLevel, rating, avatar });
+        saveUsers(users);
+        
+        const players = getPlayers();
+        players.push({ id: "p"+Date.now(), name: fullName, rating, wins: 0, losses: 0, skillLevel, last5: [] });
+        savePlayers(players);
+        return true;
+    }
+
+    function forfeitMatch(matchId, forfeitingPlayerName) {
+        let matches = getMatches();
+        const idx = matches.findIndex(m => m.id === matchId && m.status === "upcoming");
+        if (idx === -1) return false;
+        const match = matches[idx];
+        const opponent = match.home === forfeitingPlayerName ? match.away : match.home;
+        const winner = opponent;
+        const loser = forfeitingPlayerName;
+        matches[idx].status = "finished";
+        matches[idx].winner = winner;
+        matches[idx].loser = loser;
+        matches[idx].resultText = `${loser} WALKOVER`;
+        let players = getPlayers();
+        const winnerP = players.find(p => p.name === winner);
+        const loserP = players.find(p => p.name === loser);
+        if (winnerP && loserP) {
+            winnerP.wins += 1;
+            loserP.losses += 1;
+            winnerP.rating = Math.min(10, +(winnerP.rating + 0.15).toFixed(1));
+            loserP.rating = Math.max(0, +(loserP.rating - 0.2).toFixed(1));
+            if (!winnerP.last5) winnerP.last5 = [];
+            if (!loserP.last5) loserP.last5 = [];
+            winnerP.last5.unshift({ vs: loser, result: "Win (Walkover)", date: new Date().toLocaleDateString() });
+            loserP.last5.unshift({ vs: winner, result: "Loss (Forfeit)", date: new Date().toLocaleDateString() });
+            if (winnerP.last5.length > 5) winnerP.last5.pop();
+            if (loserP.last5.length > 5) loserP.last5.pop();
+            savePlayers(players);
+        }
+        saveMatches(matches);
+        return true;
+    }
+
+    function sendChallenge(from, to) {
+        const challenges = getChallenges();
+        challenges.push({ id: "ch"+Date.now(), from, to, status: "pending", date: new Date().toISOString() });
+        saveChallenges(challenges);
+    }
+
+    function acceptChallenge(challengeId) {
+        const challenges = getChallenges();
+        const idx = challenges.findIndex(c => c.id === challengeId);
+        if (idx !== -1 && challenges[idx].status === "pending") {
+            challenges[idx].status = "accepted";
+            saveChallenges(challenges);
+            const matches = getMatches();
+            const futureDate = new Date();
+            futureDate.setDate(futureDate.getDate() + 7);
+            matches.push({
+                id: "m"+Date.now(),
+                home: challenges[idx].from,
+                away: challenges[idx].to,
+                date: futureDate.toISOString().split('T')[0],
+                time: "19:00",
+                court: "TBD",
+                status: "upcoming",
+                winner: null,
+                loser: null,
+                resultText: null
+            });
+            saveMatches(matches);
+            return true;
+        }
+        return false;
+    }
+
+    function rejectChallenge(challengeId) {
+        let challenges = getChallenges();
+        challenges = challenges.filter(c => c.id !== challengeId);
+        saveChallenges(challenges);
+    }
+
+    function createMatch(home, away, date, time, court) {
+        const matches = getMatches();
+        matches.push({ id: "m"+Date.now(), home, away, date, time, court, status: "upcoming", winner: null, loser: null, resultText: null });
+        saveMatches(matches);
+    }
+
+    function createTournament(name, trophy, date) {
+        const tournaments = getTournaments();
+        tournaments.push({ id: "t"+Date.now(), name, trophy, date, status: "upcoming" });
+        saveTournaments(tournaments);
+    }
+
+    let currentTab = "dashboard";
+    let currentChatUser = null;
+    let showRegister = false;
+
+    function render() {
+        const session = getSession();
+        if (!session) { renderAuth(); return; }
+        const isManager = session.role === "manager";
+        const root = document.getElementById("appRoot");
+        root.innerHTML = `
+            <div class="phone">
+                <div class="premium-header">
+                    <div class="header-flex">
+                        <div class="logo"><h1>🎾 ULTIMATE</h1></div>
+                        <div class="user-card-header">
+                            ${escapeHtml(session.name)} 
+                            <span class="rating-badge">⭐ ${session.rating || '?'}</span>
+                            <span class="rating-badge" style="background:#FFB347;">🎾 ${session.skillLevel || 'Beginner'}</span>
+                        </div>
+                        <button class="logout-btn" id="logoutBtn">Exit</button>
+                    </div>
+                </div>
+                <div class="scroll-area" id="dynamicContent">Loading...</div>
+                <div class="bottom-nav-premium" id="bottomNav">
+                    <div class="nav-icon-btn" data-tab="dashboard">🏠 Home</div>
+                    <div class="nav-icon-btn" data-tab="standings">📊 Ranking</div>
+                    <div class="nav-icon-btn" data-tab="matches">🎾 Matches</div>
+                    <div class="nav-icon-btn" data-tab="chat">💬 Chat</div>
+                    ${isManager ? '<div class="nav-icon-btn" data-tab="admin">⚙️ Admin</div>' : ''}
+                </div>
+            </div>
+        `;
+        document.querySelectorAll('.nav-icon-btn').forEach(el => {
+            el.addEventListener('click', () => { currentTab = el.dataset.tab; currentChatUser = null; renderDynamicContent(session, isManager); highlightNav(); });
+        });
+        document.getElementById("logoutBtn")?.addEventListener("click", () => { clearSession(); render(); });
+        renderDynamicContent(session, isManager);
+        highlightNav();
+    }
+
+    function highlightNav() {
+        document.querySelectorAll('.nav-icon-btn').forEach(el => {
+            if (el.dataset.tab === currentTab) el.classList.add('active');
+            else el.classList.remove('active');
+        });
+    }
+
+    function renderDynamicContent(session, isManager) {
+        const container = document.getElementById("dynamicContent");
+        if (!container) return;
+        if (currentTab === "dashboard") container.innerHTML = renderDashboard(session);
+        else if (currentTab === "standings") container.innerHTML = renderStandings();
+        else if (currentTab === "matches") container.innerHTML = renderMatches(session);
+        else if (currentTab === "chat") container.innerHTML = renderChatSection(session);
+        else if (currentTab === "admin" && isManager) container.innerHTML = renderAdminPanel();
+        else container.innerHTML = `<div class="glass-card">Select section</div>`;
+        
+        if (currentTab === "matches") attachMatchEvents(session);
+        if (currentTab === "chat") attachChatEvents(session);
+        if (currentTab === "admin" && isManager) attachAdminEvents();
+    }
+
+    function renderDashboard(session) {
+        const players = getPlayers();
+        const myPlayer = players.find(p => p.name === session.name) || { name: session.name, wins: 0, losses: 0, rating: session.rating || 3.0, skillLevel: session.skillLevel || "Beginner", last5: [] };
+        const pendingChallenges = getChallenges().filter(c => c.to === session.name && c.status === "pending");
+        const tournaments = getTournaments();
+        return `
+            <div class="glass-card">
+                <div class="card-title">👋 Hello, ${escapeHtml(session.name)}</div>
+                <div style="background:#FFF4E6; padding:10px; border-radius:20px; font-size:0.8rem;">
+                    🏆 Rating: <strong>${myPlayer.rating}</strong> | W/L: ${myPlayer.wins}W - ${myPlayer.losses}L<br>
+                    🎾 Skill Level: <strong>${myPlayer.skillLevel}</strong> | 📍 ${session.location || 'Not set'}
+                </div>
+            </div>
+            ${pendingChallenges.length > 0 ? `
+            <div class="glass-card">
+                <div class="card-title">🎾 Pending Challenges</div>
+                ${pendingChallenges.map(ch => `
+                    <div class="challenge-request">
+                        <strong>${escapeHtml(ch.from)}</strong> challenged you to a match!
+                        <div style="margin-top:6px;">
+                            <button class="chat-btn" style="background:#2E7D32;" onclick="window.acceptChallengeHandler('${ch.id}')">✅ Accept</button>
+                            <button class="chat-btn" style="background:#DC2626;" onclick="window.rejectChallengeHandler('${ch.id}')">❌ Reject</button>
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+            ` : ''}
+            <div class="glass-card">
+                <div class="card-title">📋 Last 5 Matches</div>
+                ${!myPlayer.last5 || myPlayer.last5.length === 0 ? '<p>No recent matches</p>' : `
+                    <table class="elegant-table">
+                        <tr><th>Opponent</th><th>Result</th><th>Date</th></tr>
+                        ${myPlayer.last5.map(m => `<td><td>${escapeHtml(m.vs)}</td><td>${escapeHtml(m.result)}</td><td>${m.date}</td></tr>`).join('')}
+                    </table>
+                `}
+            </div>
+            <div class="glass-card">
+                <div class="card-title">🏆 Upcoming Tournaments</div>
+                ${tournaments.length === 0 ? '<p>No tournaments yet</p>' : tournaments.map(t => `<div style="padding:8px; background:#F8FAFF; border-radius:16px; margin-bottom:6px;">🏆 ${escapeHtml(t.name)}<br>🎁 Trophy: ${escapeHtml(t.trophy)}<br>📅 ${t.date}</div>`).join('')}
+            </div>
+            <div class="glass-card"><div class="card-title">🏅 Active League</div><p>${getLeagues()[0]?.name} — ${getLeagues()[0]?.season}</p></div>
+        `;
+    }
+
+    function renderStandings() {
+        let players = [...getPlayers()];
+        players.sort((a,b)=>b.rating - a.rating);
+        return `<div class="glass-card"><div class="card-title">📈 World Rankings</div><table class="elegant-table"><tr><th>#</th><th>Player</th><th>Skill</th><th>Rating</th><th>W/L</th></tr>${players.map((p,i)=>`<tr><td>${i+1}</td><td><strong>${escapeHtml(p.name)}</strong></td><td>${p.skillLevel || 'Beginner'}</td><td>⭐ ${p.rating}</td><td>${p.wins}-${p.losses}</td></tr>`).join('')}</table></div>`;
+    }
+
+    function renderMatches(session) {
+        const matches = getMatches();
+        return `<div class="glass-card"><div class="card-title">🎾 All Matches</div><table class="elegant-table"><tr><th>Home</th><th>Away</th><th>Date/Court</th><th>Action</th></tr>${matches.map(m => {
+            const isCurrentUser = (m.home === session.name || m.away === session.name);
+            const homeDisplay = m.home === session.name ? `<span style="color:#FF6B35; font-weight:800;">${escapeHtml(m.home)}</span>` : escapeHtml(m.home);
+            const awayDisplay = m.away === session.name ? `<span style="color:#FF6B35; font-weight:800;">${escapeHtml(m.away)}</span>` : escapeHtml(m.away);
+            return `<tr>
+                <td>${homeDisplay}</td>
+                <td>${awayDisplay}</td>
+                <td>${m.date} ${m.time}<br>🏟️ ${m.court}</td>
+                <td>${m.status === 'upcoming' && isCurrentUser ? `<button class="forfeit-btn" data-matchid="${m.id}" data-player="${session.name}">❌ Forfeit</button>` : (m.status === 'finished' ? `<span>🏁 ${m.resultText || 'Finished'}</span>` : '<span>⏳ Upcoming</span>')}</td>
+            </tr>`;
+        }).join('')}</table></div>`;
+    }
+
+    function attachMatchEvents(session) {
+        document.querySelectorAll('.forfeit-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const matchId = btn.dataset.matchid;
+                if (confirm("Forfeit match? You will lose.")) {
+                    forfeitMatch(matchId, session.name);
+                    renderDynamicContent(session, session.role === "manager");
+                }
+            });
+        });
+    }
+
+    function renderChatSection(session) {
+        const users = getUsers().filter(u => u.name !== session.name);
+        
+        if (currentChatUser) {
+            const privChat = getPrivateChat();
+            const convKey = [session.name, currentChatUser].sort().join('_');
+            const msgs = privChat.filter(m => m.conversation === convKey);
+            return `
+                <div class="glass-card">
+                    <button class="back-btn" id="backToUsers">← Back to Users</button>
+                    <div class="card-title">💬 Chat with ${escapeHtml(currentChatUser)}</div>
+                    <div class="chat-window">
+                        <div class="chat-messages" id="chatMsgsArea">
+                            ${msgs.map(m => `<div class="msg-bubble"><b>${escapeHtml(m.sender)}</b><br>${escapeHtml(m.msg)}<div style="font-size:9px;">${new Date(m.timestamp).toLocaleTimeString()}</div></div>`).join('')}
+                        </div>
+                        <div class="input-row">
+                            <input type="text" id="chatMessageInput" placeholder="Type a message...">
+                            <button id="sendMsgBtn">Send</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        
+        return `
+            <div class="glass-card">
+                <div class="card-title">💬 Users • Chat & Challenge</div>
+                <div class="user-list-premium">
+                    ${users.map(u => `
+                        <div class="user-card">
+                            <div class="user-info">
+                                <div class="avatar">${escapeHtml(u.avatar || u.name.charAt(0)+u.name.charAt(1))}</div>
+                                <div class="user-details">
+                                    <h4>${escapeHtml(u.name)}</h4>
+                                    <p>⭐ ${u.rating || '3.0'} • ${u.skillLevel || 'Beginner'}</p>
+                                </div>
+                            </div>
+                            <div class="action-buttons">
+                                <button class="chat-btn" data-user="${u.name}" data-action="chat">💬 Chat</button>
+                                <button class="challenge-btn" data-user="${u.name}" data-action="challenge">🎾 Challenge</button>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        `;
+    }
+
+    function attachChatEvents(session) {
+        document.querySelectorAll('.chat-btn[data-action="chat"]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                currentChatUser = btn.dataset.user;
+                renderDynamicContent(session, session.role === "manager");
+                setTimeout(() => {
+                    const msgsDiv = document.getElementById("chatMsgsArea");
+                    if (msgsDiv) msgsDiv.scrollTop = msgsDiv.scrollHeight;
+                }, 100);
+            });
+        });
+        
+        document.querySelectorAll('.challenge-btn[data-action="challenge"]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const targetUser = btn.dataset.user;
+                if (confirm(`Send match challenge to ${targetUser}?`)) {
+                    sendChallenge(session.name, targetUser);
+                    alert(`Challenge sent to ${targetUser}!`);
+                }
+            });
+        });
+        
+        const sendBtn = document.getElementById("sendMsgBtn");
+        if (sendBtn && currentChatUser) {
+            sendBtn.addEventListener("click", () => {
+                const input = document.getElementById("chatMessageInput");
+                const msg = input.value.trim();
+                if (msg) {
+                    let priv = getPrivateChat();
+                    const convKey = [session.name, currentChatUser].sort().join('_');
+                    priv.push({ id: "priv"+Date.now(), conversation: convKey, sender: session.name, receiver: currentChatUser, msg: msg, timestamp: Date.now(), read: false });
+                    savePrivateChat(priv);
+                    input.value = "";
+                    renderDynamicContent(session, session.role === "manager");
+                    setTimeout(() => {
+                        const msgsDiv = document.getElementById("chatMsgsArea");
+                        if (msgsDiv) msgsDiv.scrollTop = msgsDiv.scrollHeight;
+                    }, 50);
+                }
+            });
+        }
+        
+        const backBtn = document.getElementById("backToUsers");
+        if (backBtn) {
+            backBtn.addEventListener("click", () => {
+                currentChatUser = null;
+                renderDynamicContent(session, session.role === "manager");
+            });
+        }
+    }
+
+    function renderAdminPanel() {
+        const players = getPlayers();
+        return `
+            <div class="glass-card">
+                <div class="card-title">⚙️ Admin Panel - Schedule Match</div>
+                <div class="input-group-login"><input type="text" id="homePlayer" placeholder="Home Player" list="playerList"><datalist id="playerList">${players.map(p=>`<option>${p.name}</option>`).join('')}</datalist></div>
+                <div class="input-group-login"><input type="text" id="awayPlayer" placeholder="Away Player"></div>
+                <div class="input-group-login"><input type="date" id="matchDate"></div>
+                <div class="input-group-login"><input type="time" id="matchTime"></div>
+                <div class="input-group-login"><input type="text" id="courtName" placeholder="Court Name"></div>
+                <button class="login-btn" id="scheduleMatchBtn">➕ Schedule Match</button>
+            </div>
+            <div class="glass-card">
+                <div class="card-title">🏆 Create Tournament</div>
+                <div class="input-group-login"><input type="text" id="tournamentName" placeholder="Tournament Name"></div>
+                <div class="input-group-login"><input type="text" id="trophyName" placeholder="Trophy / Prize"></div>
+                <div class="input-group-login"><input type="date" id="tournamentDate"></div>
+                <button class="login-btn" id="createTournamentBtn">🏆 Create Tournament</button>
+            </div>
+            <div class="glass-card">
+                <div class="card-title">📋 Existing Tournaments</div>
+                <div id="tournamentList"></div>
+            </div>
+        `;
+    }
+
+    function attachAdminEvents() {
+        document.getElementById("scheduleMatchBtn")?.addEventListener("click", () => {
+            const home = document.getElementById("homePlayer")?.value;
+            const away = document.getElementById("awayPlayer")?.value;
+            const date = document.getElementById("matchDate")?.value;
+            const time = document.getElementById("matchTime")?.value;
+            const court = document.getElementById("courtName")?.value;
+            if (home && away && date && time && court && home !== away) {
+                createMatch(home, away, date, time, court);
+                alert("Match scheduled!");
+                renderDynamicContent(getSession(), true);
+            } else alert("Fill all fields and home≠away");
+        });
+        
+        document.getElementById("createTournamentBtn")?.addEventListener("click", () => {
+            const name = document.getElementById("tournamentName")?.value;
+            const trophy = document.getElementById("trophyName")?.value;
+            const date = document.getElementById("tournamentDate")?.value;
+            if (name && trophy && date) {
+                createTournament(name, trophy, date);
+                alert("Tournament created!");
+                renderDynamicContent(getSession(), true);
+            } else alert("Fill all fields");
+        });
+        
+        const tournamentList = document.getElementById("tournamentList");
+        if (tournamentList) {
+            const tournaments = getTournaments();
+            tournamentList.innerHTML = tournaments.map(t => `<div style="padding:8px; background:#F8FAFF; border-radius:16px; margin-bottom:6px;">🏆 ${escapeHtml(t.name)}<br>🎁 ${escapeHtml(t.trophy)}<br>📅 ${t.date}</div>`).join('');
+        }
+    }
+
+    function renderAuth() {
+        const root = document.getElementById("appRoot");
+        if (!showRegister) {
+            root.innerHTML = `
+                <div class="phone" style="background:#FFFFFF;">
+                    <div class="login-container">
+                        <div class="tennis-icon"><span>🎾</span></div>
+                        <div class="login-header"><h1>ULTIMATE LEAGUE</h1><p>Chat • Challenge • Play</p></div>
+                        <div class="login-form">
+                            <div class="input-group-login"><input type="email" id="loginEmail" placeholder="Email" value="manager@tennis.com"></div>
+                            <div class="input-group-login"><input type="password" id="loginPass" placeholder="Password" value="admin123"></div>
+                            <button class="login-btn" id="doLogin">Login →</button>
+                        </div>
+                        <div class="toggle-auth" id="showRegisterBtn">Don't have an account? <strong>Register</strong></div>
+                        <div class="demo-accounts">
+                            <p>🎾 Demo Accounts</p>
+                            <div class="demo-grid">
+                                <div class="demo-item" data-email="manager@tennis.com" data-pass="admin123">👑 Manager</div>
+                                <div class="demo-item" data-email="user@tennis.com" data-pass="user123">👤 Emma</div>
+                                <div class="demo-item" data-email="novak@tennis.com" data-pass="novak123">🇷🇸 Novak</div>
+                                <div class="demo-item" data-email="carlos@tennis.com" data-pass="carlos123">🇪🇸 Carlos</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.getElementById("doLogin")?.addEventListener("click", () => {
+                if (login(document.getElementById("loginEmail").value, document.getElementById("loginPass").value)) render();
+                else alert("Invalid credentials");
+            });
+            document.querySelectorAll('.demo-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    document.getElementById("loginEmail").value = item.dataset.email;
+                    document.getElementById("loginPass").value = item.dataset.pass;
+                });
+            });
+            document.getElementById("showRegisterBtn")?.addEventListener("click", () => { showRegister = true; renderAuth(); });
+        } else {
+            root.innerHTML = `
+                <div class="phone" style="background:#FFFFFF;">
+                    <div class="register-container">
+                        <div class="tennis-icon"><span>🎾</span></div>
+                        <div class="login-header"><h1>Create Account</h1><p>Join the Ultimate League</p></div>
+                        <div class="login-form">
+                            <div class="input-group-login"><input type="text" id="regFirstName" placeholder="First Name"></div>
+                            <div class="input-group-login"><input type="text" id="regLastName" placeholder="Last Name"></div>
+                            <div class="input-group-login"><input type="email" id="regEmail" placeholder="Email"></div>
+                            <div class="input-group-login"><input type="tel" id="regPhone" placeholder="Phone Number"></div>
+                            <div class="input-group-login"><input type="text" id="regLocation" placeholder="City / Location"></div>
+                            <div class="input-group-login">
+                                <select id="regSkillLevel">
+                                    <option value="Beginner">🎾 Beginner</option>
+                                    <option value="Intermediate">🎾 Intermediate</option>
+                                    <option value="Advanced">🎾 Advanced</option>
+                                    <option value="Pro">🎾 Pro</option>
+                                </select>
+                            </div>
+                            <div class="input-group-login"><input type="password" id="regPassword" placeholder="Password"></div>
+                            <button class="login-btn" id="doRegister">Register →</button>
+                        </div>
+                        <div class="toggle-auth" id="showLoginBtn">Already have an account? <strong>Login</strong></div>
+                    </div>
+                </div>
+            `;
+            document.getElementById("doRegister")?.addEventListener("click", () => {
+                const firstName = document.getElementById("regFirstName")?.value;
+                const lastName = document.getElementById("regLastName")?.value;
+                const email = document.getElementById("regEmail")?.value;
+                const phone = document.getElementById("regPhone")?.value;
+                const location = document.getElementById("regLocation")?.value;
+                const skillLevel = document.getElementById("regSkillLevel")?.value;
+                const password = document.getElementById("regPassword")?.value;
+                if (firstName && lastName && email && phone && location && password) {
+                    if (register(firstName, lastName, email, password, phone, location, skillLevel)) {
+                        alert("Registration successful! Please login.");
+                        showRegister = false;
+                        renderAuth();
+                    } else alert("Email already exists!");
+                } else alert("Please fill all fields");
+            });
+            document.getElementById("showLoginBtn")?.addEventListener("click", () => { showRegister = false; renderAuth(); });
+        }
+    }
+
+    window.acceptChallengeHandler = (challengeId) => { acceptChallenge(challengeId); render(); };
+    window.rejectChallengeHandler = (challengeId) => { rejectChallenge(challengeId); render(); };
+
+    function escapeHtml(str) { if(!str) return ''; return str.replace(/[&<>]/g, function(m){ if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m;}); }
+
+    initData();
+    render();
+</script>
+</body>
+</html>
